@@ -10,6 +10,10 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.entity.Entity;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemArmor;
@@ -28,10 +32,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class main
 {
     public static final String MODID = "oremod";
-    public static final String VERSION = "1.11-beta";
+    public static final String VERSION = "1.11";
     public static ToolMaterial amethystMaterial_pick = EnumHelper.addToolMaterial("materialAmethyst_pick", 10, 10000, 100f, 0, 5);
     public static ToolMaterial amethystMaterial_sword = EnumHelper.addToolMaterial("materialAmethyst_sword", 0, 10000, 100f,10000,10);
-    public static ArmorMaterial amethystMaterial_armor = EnumHelper.addArmorMaterial("materialAmethyst_armor", 10000, new int[] {10000}, 10);
+    public static ArmorMaterial amethystMaterial_armor = EnumHelper.addArmorMaterial("materialAmethyst_armor", 100, new int[] {7}, 10);
+    ItemArmor amethystHelm = new Armor(amethystMaterial_armor, "amethystHelm", 1, 0);
+
     @EventHandler
       public void init(FMLInitializationEvent event)
       {
@@ -46,8 +52,9 @@ public class main
         //BLOCKS
         ItemSword amethystSword = new Sword(amethystMaterial_sword, "amethystSword");
         GameRegistry.registerItem(amethystSword, "amethystSword");
-        ItemArmor amethystHelm = new Armor(amethystMaterial_armor, "amethystArmor", 1, 0);
+
         GameRegistry.registerItem(amethystHelm, "amethystHelm");
+
         Block amethystOre = new ModBlock(Material.rock, "amethystOre", amethyst);
         GameRegistry.registerBlock(amethystOre, "amethystOre");
         Block darkOre = new ModBlock(Material.rock, "darkOre", darkItem);
@@ -55,8 +62,8 @@ public class main
         GameRegistry.registerWorldGenerator(new ModWorldGenerator(amethystOre, 3), 0);
         GameRegistry.registerWorldGenerator(new ModWorldGenerator(darkOre, 7), 0);
         //GameRegistry.addRecipe(new ItemStack(amethystOre), new Object[] {"DDD", "DDD", "DDD", "D", amethyst});
-        GameRegistry.addRecipe(new ItemStack(amethystPick), "XXX", " Y ", " Y ", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.stick);
-        GameRegistry.addRecipe(new ItemStack(amethystSword), " X ", " X ", " Y ", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.stick);
+        GameRegistry.addRecipe(new ItemStack(amethystPick), "XXX", "XYX", "XYX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_pickaxe);
+        GameRegistry.addRecipe(new ItemStack(amethystSword), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_sword);
       }
       public class ModBlock extends Block
       {
@@ -159,6 +166,13 @@ public class main
           this.setUnlocalizedName(itemName);
           this.setTextureName(MODID + ":" + itemName);
         }
+        public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type){
+          if(stack.getItem() == amethystHelm){
+            return "oremod:textures/items/amethystHelm3d.png";
+          } else return null;
+
+        }
+
       }
 
 
