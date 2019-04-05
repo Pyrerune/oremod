@@ -1,0 +1,16 @@
+[
+{
+  "modid": "oremod",
+  "name": "Ore Mod",
+  "description": "Adds Some New Ore Blocks to Minecraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Pyrerune"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
