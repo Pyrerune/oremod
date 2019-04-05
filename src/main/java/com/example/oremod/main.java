@@ -12,6 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.init.Items;
@@ -26,10 +28,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class main
 {
     public static final String MODID = "oremod";
-    public static final String VERSION = "1.10.1";
+    public static final String VERSION = "1.11-beta";
     public static ToolMaterial amethystMaterial_pick = EnumHelper.addToolMaterial("materialAmethyst_pick", 10, 10000, 100f, 0, 5);
     public static ToolMaterial amethystMaterial_sword = EnumHelper.addToolMaterial("materialAmethyst_sword", 0, 10000, 100f,10000,10);
-
+    public static ArmorMaterial amethystMaterial_armor = EnumHelper.addArmorMaterial("materialAmethyst_armor", 10000, new int[] {10000}, 10);
     @EventHandler
       public void init(FMLInitializationEvent event)
       {
@@ -44,6 +46,8 @@ public class main
         //BLOCKS
         ItemSword amethystSword = new Sword(amethystMaterial_sword, "amethystSword");
         GameRegistry.registerItem(amethystSword, "amethystSword");
+        ItemArmor amethystHelm = new Armor(amethystMaterial_armor, "amethystArmor", 1, 0);
+        GameRegistry.registerItem(amethystHelm, "amethystHelm");
         Block amethystOre = new ModBlock(Material.rock, "amethystOre", amethyst);
         GameRegistry.registerBlock(amethystOre, "amethystOre");
         Block darkOre = new ModBlock(Material.rock, "darkOre", darkItem);
@@ -149,7 +153,13 @@ public class main
         }
       }
 
-
+      public class Armor extends ItemArmor {
+        public Armor(ArmorMaterial material, String itemName, int render_idx, int type) {
+          super(material, render_idx, type);
+          this.setUnlocalizedName(itemName);
+          this.setTextureName(MODID + ":" + itemName);
+        }
+      }
 
 
 }
