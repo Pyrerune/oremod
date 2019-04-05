@@ -26,7 +26,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class main
 {
     public static final String MODID = "oremod";
-    public static final String VERSION = "1.9-RC3";
+    public static final String VERSION = "1.10";
     public static ToolMaterial amethystMaterial_pick = EnumHelper.addToolMaterial("materialAmethyst_pick", 10, 10000, 100f, 0, 5);
     public static ToolMaterial amethystMaterial_sword = EnumHelper.addToolMaterial("materialAmethyst_sword", 0, 10000, 100f,10000,10);
 
