@@ -34,7 +34,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class main
 {
     public static final String MODID = "oremod";
-    public static final String VERSION = "1.12";
+    public static final String VERSION = "1.13-beta";
     public static ToolMaterial amethystMaterial_pick = EnumHelper.addToolMaterial("materialAmethyst_pick", 10, 10000, 100f, 0, 5);
     public static ToolMaterial amethystMaterial_sword = EnumHelper.addToolMaterial("materialAmethyst_sword", 0, 10000, 100f,10000,10);
     public static ToolMaterial CorruptSteelMaterial = EnumHelper.addToolMaterial("MaterialCorruptSteel", 0, 10000, 0f, 0, 0);
@@ -82,6 +82,7 @@ public class main
         GameRegistry.addRecipe(new ItemStack(darkSteel), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/darkItem, 'Y', Items.iron_ingot);
         GameRegistry.addRecipe(new ItemStack(RefiningTool), "XXX", "XY ", " Y ", 'X', /*Items.iron_ingot*/darkSteel, 'Y', Items.stick);
         GameRegistry.addRecipe(new ItemStack(amethyst), "XY ", "   ", "   ", 'X', /*Items.iron_ingot*/new ItemStack(RefiningTool, 1, OreDictionary.WILDCARD_VALUE), 'Y', amethystItem);
+        GameRegistry.addRecipe(new ItemStack(Items.beef), "XY ", "   ", "   ", "X", Items.rotten_flesh, "Y", Items.sugar);
 
       }
       public class ModBlock extends Block
