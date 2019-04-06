@@ -1,6 +1,7 @@
 package com.example.oremod;
 
 
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -17,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemTool;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
@@ -32,38 +34,55 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class main
 {
     public static final String MODID = "oremod";
-    public static final String VERSION = "1.11";
+    public static final String VERSION = "1.12";
     public static ToolMaterial amethystMaterial_pick = EnumHelper.addToolMaterial("materialAmethyst_pick", 10, 10000, 100f, 0, 5);
     public static ToolMaterial amethystMaterial_sword = EnumHelper.addToolMaterial("materialAmethyst_sword", 0, 10000, 100f,10000,10);
-    public static ArmorMaterial amethystMaterial_armor = EnumHelper.addArmorMaterial("materialAmethyst_armor", 100, new int[] {7}, 10);
+    public static ToolMaterial CorruptSteelMaterial = EnumHelper.addToolMaterial("MaterialCorruptSteel", 0, 10000, 0f, 0, 0);
+    public static ArmorMaterial amethystMaterial_armor = EnumHelper.addArmorMaterial("materialAmethyst_armor", 100, new int[] {100}, 10);
     ItemArmor amethystHelm = new Armor(amethystMaterial_armor, "amethystHelm", 1, 0);
 
     @EventHandler
       public void init(FMLInitializationEvent event)
       {
-        //ITEMS
+        System.out.println("Start");
+        //y
+        Item amethystItem = new ModItem("amethystItem");
+        //Y
         Item amethyst = new ModItem("amethyst");
-        GameRegistry.registerItem(amethyst, "amethyst");
+        //Y
         Item darkItem = new ModItem("darkItem");
-        GameRegistry.registerItem(darkItem, "darkItem");
-        //Item stick = Items.stick;
-        ItemPickaxe amethystPick = new Pickaxe(amethystMaterial_pick, "amethystPick");
-        GameRegistry.registerItem(amethystPick, "amethystPick");
-        //BLOCKS
-        ItemSword amethystSword = new Sword(amethystMaterial_sword, "amethystSword");
-        GameRegistry.registerItem(amethystSword, "amethystSword");
-
-        GameRegistry.registerItem(amethystHelm, "amethystHelm");
-
-        Block amethystOre = new ModBlock(Material.rock, "amethystOre", amethyst);
-        GameRegistry.registerBlock(amethystOre, "amethystOre");
+        //Y
+        Item darkSteel = new ModItem("darkSteel");
+        //y
+        ItemPickaxe RefiningTool = new Tool(CorruptSteelMaterial, "RefiningTool");
+        //Y
+        Block amethystOre = new ModBlock(Material.rock, "amethystOre", amethystItem);
+        //Y
         Block darkOre = new ModBlock(Material.rock, "darkOre", darkItem);
+        //y
+        ItemSword amethystSword = new Sword(amethystMaterial_sword, "amethystSword");
+        //y
+        ItemPickaxe amethystPick = new Pickaxe(amethystMaterial_pick, "amethystPick");
+        GameRegistry.registerItem(amethystItem, "amethystItem");
+        GameRegistry.registerItem(darkItem, "darkItem");
+        GameRegistry.registerItem(amethyst, "amethyst");
+        GameRegistry.registerItem(amethystPick, "amethystPick");
+        GameRegistry.registerItem(amethystSword, "amethystSword");
+        GameRegistry.registerItem(darkSteel, "darkSteel");
+        GameRegistry.registerItem(RefiningTool, "RefiningTool");
+        GameRegistry.registerItem(amethystHelm, "amethystHelm");
+        GameRegistry.registerBlock(amethystOre, "amethystOre");
         GameRegistry.registerBlock(darkOre, "darkOre");
-        GameRegistry.registerWorldGenerator(new ModWorldGenerator(amethystOre, 3), 0);
+        GameRegistry.registerWorldGenerator(new ModWorldGenerator(amethystOre, 6), 0);
         GameRegistry.registerWorldGenerator(new ModWorldGenerator(darkOre, 7), 0);
         //GameRegistry.addRecipe(new ItemStack(amethystOre), new Object[] {"DDD", "DDD", "DDD", "D", amethyst});
-        GameRegistry.addRecipe(new ItemStack(amethystPick), "XXX", "XYX", "XYX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_pickaxe);
+        GameRegistry.addRecipe(new ItemStack(amethystPick), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_pickaxe);
         GameRegistry.addRecipe(new ItemStack(amethystSword), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_sword);
+        GameRegistry.addRecipe(new ItemStack(amethystHelm), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/amethyst, 'Y', Items.diamond_helmet);
+        GameRegistry.addRecipe(new ItemStack(darkSteel), "XXX", "XYX", "XXX", 'X', /*Items.iron_ingot*/darkItem, 'Y', Items.iron_ingot);
+        GameRegistry.addRecipe(new ItemStack(RefiningTool), "XXX", "XY ", " Y ", 'X', /*Items.iron_ingot*/darkSteel, 'Y', Items.stick);
+        GameRegistry.addRecipe(new ItemStack(amethyst), "XY ", "   ", "   ", 'X', /*Items.iron_ingot*/new ItemStack(RefiningTool, 1, OreDictionary.WILDCARD_VALUE), 'Y', amethystItem);
+
       }
       public class ModBlock extends Block
       {
@@ -150,7 +169,34 @@ public class main
 
         }
       }
+      public class Tool extends ItemPickaxe {
 
+
+
+        public Tool(ToolMaterial material, String itemName) {
+
+          super(material);
+          this.setUnlocalizedName(itemName);
+          this.setTextureName(MODID + ":" + itemName);
+          this.setCreativeTab(CreativeTabs.tabTools);
+
+        }
+        public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack) {
+         return false;
+        }
+
+        //Tells the game your item has a container item
+        public boolean hasContainerItem() {
+     	    return true;
+        }
+
+        //Sets teh container item
+        public ItemStack getContainerItem(ItemStack itemStack) {
+     	    itemStack.attemptDamageItem(1, itemRand);
+
+     	    return itemStack;
+        }
+      }
       public class Sword extends ItemSword {
         public Sword(ToolMaterial material, String itemName) {
           super(material);

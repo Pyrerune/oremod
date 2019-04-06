@@ -1,7 +1,10 @@
 tile.amethystOre.name=Amethyst Ore
-item.amethyst.name=Amethyst
+item.amethyst.name=Amethyst Gem
 tile.darkOre.name=Corrupt Diamond Ore
 item.darkItem.name=Corrupt Gem
 item.amethystPick.name=Amethyst Pickaxe
 item.amethystSword.name=Amethyst Sword
 item.amethystHelm.name=Amethyst Helmet
+item.amethystItem.name=Unrefined Amethyst Gem
+item.darkSteel.name=Corrupt Steel
+item.RefiningTool.name=Refining Tool
